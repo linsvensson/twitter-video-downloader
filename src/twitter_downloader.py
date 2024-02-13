@@ -1,21 +1,14 @@
 import requests
 import bs4
 
-from tqdm import tqdm
-
-def download_video(url, output_file) -> None:
+def download_video(url, output_filename) -> None:
     response = requests.get(url, stream=True)
-    total_size = int(response.headers.get("content-length", 0))
     block_size = 1024
-    progress_bar = tqdm(total=total_size, unit="B", unit_scale=True)
 
-    with open(output_file, "wb") as file:
+    with open(output_filename, "wb") as file:
         for data in response.iter_content(block_size):
-            progress_bar.update(len(data))
             file.write(data)
-
-    progress_bar.close()
-
+        file.flush()
 
 def download_twitter_video(url, file_name):
     api_url = f"https://twitsave.com/info?url={url}"
