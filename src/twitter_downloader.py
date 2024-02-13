@@ -1,6 +1,3 @@
-import sys
-import re
-
 import requests
 import bs4
 
@@ -18,7 +15,6 @@ def download_video(url, output_file) -> None:
             file.write(data)
 
     progress_bar.close()
-    print("Video downloaded successfully!")
 
 
 def download_twitter_video(url, file_name):
