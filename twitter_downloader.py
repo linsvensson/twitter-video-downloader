@@ -9,12 +9,12 @@ from tqdm import tqdm
 from pathlib import Path
 
 
-def download_video(url, file_name) -> None:
+def download_video(url, output_file) -> None:
     """Download a video from a URL into a filename.
 
     Args:
         url (str): The video URL to download
-        file_name (str): The file name or path to save the video to.
+        output_file (str): The file name or path to save the video to.
     """
 
     response = requests.get(url, stream=True)
@@ -22,9 +22,7 @@ def download_video(url, file_name) -> None:
     block_size = 1024
     progress_bar = tqdm(total=total_size, unit="B", unit_scale=True)
 
-    download_path = os.path.join(Path.home(), "Downloads", file_name)
-
-    with open(download_path, "wb") as file:
+    with open(output_file, "wb") as file:
         for data in response.iter_content(block_size):
             progress_bar.update(len(data))
             file.write(data)
